@@ -8,19 +8,11 @@ import time
 from tqdm.auto import tqdm
 
 # Deine Ziel-URL
-series_slug = input("Bitte den Serien-Slug von fernsehserien.de eingeben (z.B. 'sloborn' oder 'der-bergdoktor'): ")
 BASE_URL = "https://www.fernsehserien.de"  # Basis-URL, wenn die Links relativ sind
-EPISODENLISTE_URL = f"https://www.fernsehserien.de/{series_slug}/episodenguide"
+EPISODENLISTE_URL = "https://www.fernsehserien.de/sloborn/episodenguide"  # Anpassen
 
 # HTML abrufen
-try:
-    response = requests.get(EPISODENLISTE_URL)
-    response.raise_for_status()  # Wirft eine Exception bei HTTP-Fehlern (z.B. 404)
-except requests.RequestException as e:
-    print(f"Fehler beim Abrufen der Episodenliste für '{series_slug}': {e}")
-    # Beendet das Skript, da ohne die Liste nichts weiter getan werden kann.
-    exit()
-
+response = requests.get(EPISODENLISTE_URL)
 soup = BeautifulSoup(response.content, "html.parser")
 
 # Alle Episoden-Container finden
@@ -61,7 +53,7 @@ df = pd.DataFrame(data)
 print(df.head())
 
 # Optional: Als CSV speichern
-df.to_csv(f"{series_slug}_episoden.csv", index=False)
+df.to_csv("episoden.csv", index=False)
 
 #%%
 # Neue Spalten für Staffel und Episode erstellen
@@ -194,7 +186,8 @@ print(df[['Staffel', 'Titel', 'Staffelzusammenfassung']].head())
 # %%
 df.iloc[0].Staffelzusammenfassung
 # %%
-df.to_excel(f'{series_slug}.xlsx')
+df.to_excel('sloborn.xlsx')
 
 # %%
 df
+# %%
