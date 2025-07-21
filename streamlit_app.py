@@ -110,7 +110,7 @@ df
 # %%
 import openai
 
-openai.api_key = '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'
+openai.api_key = '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'
 
 # %%
 
@@ -190,4 +190,3 @@ df.to_excel('sloborn.xlsx')
 
 # %%
 df
-# %%
